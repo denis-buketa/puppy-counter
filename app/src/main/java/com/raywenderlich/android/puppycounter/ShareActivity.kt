@@ -1,6 +1,9 @@
 package com.raywenderlich.android.puppycounter
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 /*
@@ -47,5 +50,23 @@ class ShareActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_share)
+
+    findViewById<Button>(R.id.shareBtn).setOnClickListener {
+      openShareDialog()
+    }
+  }
+
+  private fun openShareDialog() {
+    AlertDialog.Builder(this)
+      .setTitle("Are you sure you want to share these stats?")
+      .setPositiveButton("Yes") { dialog, _ ->
+        dialog.dismiss()
+        Toast.makeText(this, "Puppies Happy :]", Toast.LENGTH_SHORT).show()
+      }
+      .setNegativeButton("No") { dialog, _ ->
+        dialog.dismiss()
+        Toast.makeText(this, "Puppies Sad :[", Toast.LENGTH_SHORT).show()
+      }
+      .show()
   }
 }
