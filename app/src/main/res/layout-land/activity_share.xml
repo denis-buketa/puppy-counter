@@ -8,12 +8,12 @@
     android:id="@+id/shareImage"
     android:layout_width="0dp"
     android:layout_height="0dp"
-    android:layout_marginEnd="32dp"
+    android:layout_marginBottom="32dp"
     android:layout_marginStart="32dp"
     android:layout_marginTop="32dp"
     android:src="@drawable/dogs"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintDimensionRatio="1.14:1"
-    app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,8 +25,8 @@
     android:text="Small: 42"
     android:textSize="24sp"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/shareImage" />
+    app:layout_constraintStart_toEndOf="@+id/shareImage"
+    app:layout_constraintTop_toTopOf="@+id/shareImage" />
 
   <TextView
     android:id="@+id/middleDogStats"
@@ -36,7 +36,7 @@
     android:text="Middle: 42"
     android:textSize="24sp"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/shareImage"
     app:layout_constraintTop_toBottomOf="@+id/smallDogStats" />
 
   <TextView
@@ -47,7 +47,7 @@
     android:text="Big: 42"
     android:textSize="24sp"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/shareImage"
     app:layout_constraintTop_toBottomOf="@+id/middleDogStats" />
 
   <Button
@@ -57,7 +57,7 @@
     android:layout_marginTop="32dp"
     android:text="Share"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/shareImage"
     app:layout_constraintTop_toBottomOf="@+id/bigDogStats" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
