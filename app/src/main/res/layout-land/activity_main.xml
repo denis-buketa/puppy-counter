@@ -10,13 +10,13 @@
     android:id="@+id/smallDog"
     android:layout_width="0dp"
     android:layout_height="0dp"
-    android:layout_marginTop="32dp"
+    android:layout_marginStart="32dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless"
-    app:layout_constraintBottom_toTopOf="@+id/middleDog"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintDimensionRatio="1:1"
-    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/middleDog"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
@@ -74,16 +74,16 @@
     android:id="@+id/middleDog"
     android:layout_width="0dp"
     android:layout_height="0dp"
-    android:layout_marginBottom="16dp"
-    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless"
-    app:layout_constraintBottom_toTopOf="@+id/bigDog"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintDimensionRatio="1:1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/smallDog">
+    app:layout_constraintEnd_toStartOf="@+id/bigDog"
+    app:layout_constraintStart_toEndOf="@+id/smallDog"
+    app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
       android:layout_width="match_parent"
@@ -139,15 +139,15 @@
     android:id="@+id/bigDog"
     android:layout_width="0dp"
     android:layout_height="0dp"
-    android:layout_marginBottom="32dp"
+    android:layout_marginEnd="32dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintDimensionRatio="1:1"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/middleDog">
+    app:layout_constraintStart_toEndOf="@+id/middleDog"
+    app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
       android:layout_width="match_parent"
