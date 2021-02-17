@@ -1,11 +1,10 @@
 package com.raywenderlich.android.puppycounter
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -46,16 +45,13 @@ import androidx.fragment.app.commit
  * DEALINGS IN THE SOFTWARE.
  */
 
-class ShareActivity : AppCompatActivity() {
+class MainFragment : Fragment() {
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_share)
-    if (savedInstanceState == null) {
-      supportFragmentManager.commit {
-        setReorderingAllowed(true)
-        add(R.id.fragmentContainerView, ShareFragment())
-      }
-    }
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    return inflater.inflate(R.layout.fragment_main, container, false)
   }
 }

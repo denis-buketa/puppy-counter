@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -51,6 +52,12 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+    if (savedInstanceState == null) {
+      supportFragmentManager.commit {
+        setReorderingAllowed(true)
+        add(R.id.fragmentContainerView, MainFragment())
+      }
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
