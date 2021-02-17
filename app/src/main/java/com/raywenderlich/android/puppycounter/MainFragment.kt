@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -47,11 +51,91 @@ import androidx.fragment.app.Fragment
 
 class MainFragment : Fragment() {
 
+  private val viewModel: MainViewModel by viewModels()
+
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
     return inflater.inflate(R.layout.fragment_main, container, false)
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setupInitialState()
+    setupSmallDogViewsClickListeners()
+    setupMiddleDogViewsClickListeners()
+    setupBigDogViewsClickListeners()
+  }
+
+  private fun setupInitialState() {
+    updateSmallDogLabel()
+    updateMiddleDogLabel()
+    updateBigDogLabel()
+  }
+
+  private fun setupSmallDogViewsClickListeners() {
+    view?.apply {
+      findViewById<CardView>(R.id.smallDog).setOnClickListener {
+        viewModel.smallDogCount += 1
+        updateSmallDogLabel()
+      }
+      findViewById<ImageView>(R.id.smallDogMinusBtn).setOnClickListener {
+        viewModel.smallDogCount -= 1
+        updateSmallDogLabel()
+      }
+      findViewById<ImageView>(R.id.smallDogPlusBtn).setOnClickListener {
+        viewModel.smallDogCount += 1
+        updateSmallDogLabel()
+      }
+    }
+  }
+
+  private fun updateSmallDogLabel() {
+    view?.findViewById<TextView>(R.id.smallDogCountLabel)?.text = viewModel.smallDogCount.toString()
+  }
+
+  private fun setupMiddleDogViewsClickListeners() {
+    view?.apply {
+      findViewById<CardView>(R.id.middleDog).setOnClickListener {
+        viewModel.middleDogCount += 1
+        updateMiddleDogLabel()
+      }
+      findViewById<ImageView>(R.id.middleDogMinusBtn).setOnClickListener {
+        viewModel.middleDogCount -= 1
+        updateMiddleDogLabel()
+      }
+      findViewById<ImageView>(R.id.middleDogPlusBtn).setOnClickListener {
+        viewModel.middleDogCount += 1
+        updateMiddleDogLabel()
+      }
+    }
+  }
+
+  private fun updateMiddleDogLabel() {
+    view?.findViewById<TextView>(R.id.middleDogCountLabel)?.text =
+      viewModel.middleDogCount.toString()
+  }
+
+  private fun setupBigDogViewsClickListeners() {
+    view?.apply {
+      findViewById<CardView>(R.id.bigDog).setOnClickListener {
+        viewModel.bigDogCount += 1
+        updateBigDogLabel()
+      }
+      findViewById<ImageView>(R.id.bigDogMinusBtn).setOnClickListener {
+        viewModel.bigDogCount -= 1
+        updateBigDogLabel()
+      }
+      findViewById<ImageView>(R.id.bigDogPlusBtn).setOnClickListener {
+        viewModel.bigDogCount += 1
+        updateBigDogLabel()
+      }
+    }
+  }
+
+  private fun updateBigDogLabel() {
+    view?.findViewById<TextView>(R.id.bigDogCountLabel)?.text = viewModel.bigDogCount.toString()
   }
 }
