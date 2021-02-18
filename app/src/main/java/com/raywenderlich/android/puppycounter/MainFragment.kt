@@ -1,5 +1,6 @@
 package com.raywenderlich.android.puppycounter
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,11 @@ import androidx.fragment.app.viewModels
  * DEALINGS IN THE SOFTWARE.
  */
 
+private const val PREFS_NAME = "dog_count"
+private const val PREFS_KEY_SMALL_DOG = "small_dog_count"
+private const val PREFS_KEY_MIDDLE_DOG = "middle_dog_count"
+private const val PREFS_KEY_BIG_DOG = "big_dog_count"
+
 class MainFragment : Fragment() {
 
   companion object {
@@ -56,6 +62,20 @@ class MainFragment : Fragment() {
   }
 
   private val viewModel: MainViewModel by viewModels()
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    readDogCountFromPrefs()
+  }
+
+  private fun readDogCountFromPrefs() {
+    val sharedPref = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    viewModel.apply {
+      smallDogCount = sharedPref.getInt(PREFS_KEY_SMALL_DOG, 0)
+      middleDogCount = sharedPref.getInt(PREFS_KEY_MIDDLE_DOG, 0)
+      bigDogCount = sharedPref.getInt(PREFS_KEY_BIG_DOG, 0)
+    }
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -67,13 +87,13 @@ class MainFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    setupInitialState()
+    renderViewModelState()
     setupSmallDogViewsClickListeners()
     setupMiddleDogViewsClickListeners()
     setupBigDogViewsClickListeners()
   }
 
-  private fun setupInitialState() {
+  private fun renderViewModelState() {
     updateSmallDogLabel()
     updateMiddleDogLabel()
     updateBigDogLabel()
@@ -145,5 +165,28 @@ class MainFragment : Fragment() {
 
   fun getDogCount(): DogCount = viewModel.run {
     DogCount(smallDogCount, middleDogCount, bigDogCount)
+  }
+
+  fun clearAllCounts() {
+    viewModel.smallDogCount = 0
+    viewModel.middleDogCount= 0
+    viewModel.bigDogCount = 0
+    renderViewModelState()
+  }
+
+  override fun onStop() {
+    saveDogCountToPrefs()
+    super.onStop()
+  }
+
+  private fun saveDogCountToPrefs() {
+    val dogCount = getDogCount()
+    val sharedPref = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    with(sharedPref.edit()) {
+      putInt(PREFS_KEY_SMALL_DOG, dogCount.smallDogCount)
+      putInt(PREFS_KEY_MIDDLE_DOG, dogCount.middleDogCount)
+      putInt(PREFS_KEY_BIG_DOG, dogCount.bigDogCount)
+      apply()
+    }
   }
 }

@@ -71,6 +71,10 @@ class MainActivity : AppCompatActivity() {
         startShareActivity()
         true
       }
+      R.id.clearAction -> {
+        notifyClearAll()
+        true
+      }
       else -> super.onOptionsItemSelected(item)
     }
   }
@@ -84,5 +88,11 @@ class MainActivity : AppCompatActivity() {
     val mainFragment = supportFragmentManager.findFragmentByTag(MainFragment.TAG) as? MainFragment
     requireNotNull(mainFragment)
     return mainFragment.getDogCount()
+  }
+
+  private fun notifyClearAll() {
+    val mainFragment = supportFragmentManager.findFragmentByTag(MainFragment.TAG) as? MainFragment
+    requireNotNull(mainFragment)
+    mainFragment.clearAllCounts()
   }
 }

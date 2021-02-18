@@ -53,7 +53,10 @@ class SplashActivity : AppCompatActivity() {
 
     // Show Main Activity after one second
     Handler(Looper.myLooper()!!).postDelayed(
-        { startActivity(Intent(this, MainActivity::class.java)) },
+        {
+          startActivity(Intent(this, MainActivity::class.java))
+          finish()
+        },
         1000L
     )
   }
