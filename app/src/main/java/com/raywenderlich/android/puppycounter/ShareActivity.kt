@@ -1,9 +1,8 @@
 package com.raywenderlich.android.puppycounter
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 
@@ -46,16 +45,35 @@ import androidx.fragment.app.commit
  * DEALINGS IN THE SOFTWARE.
  */
 
+private const val EXTRA_DOG_COUNT = "ShareActivity_extra_dog_count"
+
 class ShareActivity : AppCompatActivity() {
+
+  companion object {
+
+    fun createIntent(context: Context, dogCount: DogCount) =
+      Intent(context, ShareActivity::class.java).apply {
+        putExtra(EXTRA_DOG_COUNT, dogCount)
+      }
+  }
+
+  private lateinit var dogCount: DogCount
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_share)
+    readExtras()
     if (savedInstanceState == null) {
       supportFragmentManager.commit {
         setReorderingAllowed(true)
-        add(R.id.fragmentContainerView, ShareFragment())
+        add(R.id.fragmentContainerView, ShareFragment.create(dogCount))
       }
     }
+  }
+
+  private fun readExtras() {
+    val dogCountExtra: DogCount? = intent.extras?.getParcelable(EXTRA_DOG_COUNT)
+    requireNotNull(dogCountExtra)
+    dogCount = dogCountExtra
   }
 }

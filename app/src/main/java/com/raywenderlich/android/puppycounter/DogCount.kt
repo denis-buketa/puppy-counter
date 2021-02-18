@@ -1,6 +1,7 @@
 package com.raywenderlich.android.puppycounter
 
-import androidx.lifecycle.ViewModel
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -41,9 +42,9 @@ import androidx.lifecycle.ViewModel
  * DEALINGS IN THE SOFTWARE.
  */
 
-class MainViewModel : ViewModel() {
-
-  var smallDogCount: Int = 0
-  var middleDogCount: Int = 0
-  var bigDogCount: Int = 0
-}
+@Parcelize
+data class DogCount(
+  val smallDogCount: Int,
+  val middleDogCount: Int,
+  val bigDogCount: Int
+) : Parcelable

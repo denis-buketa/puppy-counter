@@ -51,6 +51,10 @@ import androidx.fragment.app.viewModels
 
 class MainFragment : Fragment() {
 
+  companion object {
+    const val TAG = "MainFragment"
+  }
+
   private val viewModel: MainViewModel by viewModels()
 
   override fun onCreateView(
@@ -137,5 +141,9 @@ class MainFragment : Fragment() {
 
   private fun updateBigDogLabel() {
     view?.findViewById<TextView>(R.id.bigDogCountLabel)?.text = viewModel.bigDogCount.toString()
+  }
+
+  fun getDogCount(): DogCount = viewModel.run {
+    DogCount(smallDogCount, middleDogCount, bigDogCount)
   }
 }

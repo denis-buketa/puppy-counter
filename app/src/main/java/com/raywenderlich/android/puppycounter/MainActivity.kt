@@ -1,6 +1,5 @@
 package com.raywenderlich.android.puppycounter
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     if (savedInstanceState == null) {
       supportFragmentManager.commit {
         setReorderingAllowed(true)
-        add(R.id.fragmentContainerView, MainFragment())
+        add(R.id.fragmentContainerView, MainFragment(), MainFragment.TAG)
       }
     }
   }
@@ -77,7 +76,13 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun startShareActivity() {
-    val shareActivityIntent = Intent(this, ShareActivity::class.java)
-    startActivity(shareActivityIntent)
+    val intent = ShareActivity.createIntent(this, getDogCount())
+    startActivity(intent)
+  }
+
+  private fun getDogCount(): DogCount {
+    val mainFragment = supportFragmentManager.findFragmentByTag(MainFragment.TAG) as? MainFragment
+    requireNotNull(mainFragment)
+    return mainFragment.getDogCount()
   }
 }

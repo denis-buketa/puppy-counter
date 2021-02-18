@@ -41,9 +41,11 @@ import androidx.lifecycle.ViewModel
  * DEALINGS IN THE SOFTWARE.
  */
 
-class MainViewModel : ViewModel() {
+class ShareViewModel : ViewModel() {
 
   var smallDogCount: Int = 0
   var middleDogCount: Int = 0
   var bigDogCount: Int = 0
+
+  var dialogOpen: Boolean = false
 }
