@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -61,6 +62,7 @@ class ShareActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    Timber.i("onCreate() - instance: $this")
     setContentView(R.layout.activity_share)
     readExtras()
     if (savedInstanceState == null) {
@@ -71,9 +73,35 @@ class ShareActivity : AppCompatActivity() {
     }
   }
 
+  override fun onStart() {
+    super.onStart()
+    Timber.i("onStart() - instance: $this")
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Timber.i("onResume() - instance: $this")
+  }
+
+  override fun onPause() {
+    Timber.i("onPause() - instance: $this")
+    super.onPause()
+  }
+
+  override fun onStop() {
+    Timber.i("onStop() - instance: $this")
+    super.onStop()
+  }
+
+  override fun onDestroy() {
+    Timber.i("onDestroy() - instance: $this")
+    super.onDestroy()
+  }
+
   private fun readExtras() {
     val dogCountExtra: DogCount? = intent.extras?.getParcelable(EXTRA_DOG_COUNT)
     requireNotNull(dogCountExtra)
     dogCount = dogCountExtra
   }
+
 }

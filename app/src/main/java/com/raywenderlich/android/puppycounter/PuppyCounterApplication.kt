@@ -1,6 +1,7 @@
 package com.raywenderlich.android.puppycounter
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -41,32 +42,11 @@ import androidx.lifecycle.ViewModel
  * DEALINGS IN THE SOFTWARE.
  */
 
-class MainViewModel : ViewModel() {
+class PuppyCounterApplication : Application() {
 
-  var smallDogCount: Int = 0
-    set(value) {
-      field = if (value < 0) {
-        0
-      } else {
-        value
-      }
-    }
+  override fun onCreate() {
+    super.onCreate()
 
-  var middleDogCount: Int = 0
-    set(value) {
-      field = if (value < 0) {
-        0
-      } else {
-        value
-      }
-    }
-
-  var bigDogCount: Int = 0
-    set(value) {
-      field = if (value < 0) {
-        0
-      } else {
-        value
-      }
-    }
+    Timber.plant(Timber.DebugTree())
+  }
 }

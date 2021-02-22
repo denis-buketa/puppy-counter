@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -50,13 +51,41 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    Timber.i("onCreate() - instance: $this")
     setContentView(R.layout.activity_main)
+
+    // Only add fragment to this activity if activity is not being recreated (e.g. config change)
     if (savedInstanceState == null) {
       supportFragmentManager.commit {
         setReorderingAllowed(true)
         add(R.id.fragmentContainerView, MainFragment(), MainFragment.TAG)
       }
     }
+  }
+
+  override fun onStart() {
+    super.onStart()
+    Timber.i("onStart() - instance: $this")
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Timber.i("onResume() - instance: $this")
+  }
+
+  override fun onPause() {
+    Timber.i("onPause() - instance: $this")
+    super.onPause()
+  }
+
+  override fun onStop() {
+    Timber.i("onStop() - instance: $this")
+    super.onStop()
+  }
+
+  override fun onDestroy() {
+    Timber.i("onDestroy() - instance: $this")
+    super.onDestroy()
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {

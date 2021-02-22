@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -65,7 +66,57 @@ class MainFragment : Fragment() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    Timber.i("onCreate() - instance: $this")
     readDogCountFromPrefs()
+  }
+
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    Timber.i("onCreateView() - instance: $this")
+    return inflater.inflate(R.layout.fragment_main, container, false)
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    Timber.i("onViewCreated() - instance: $this")
+    renderViewModelState()
+    setupSmallDogViewsClickListeners()
+    setupMiddleDogViewsClickListeners()
+    setupBigDogViewsClickListeners()
+  }
+
+  override fun onStart() {
+    super.onStart()
+    Timber.i("onStart() - instance: $this")
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Timber.i("onResume() - instance: $this")
+  }
+
+  override fun onPause() {
+    Timber.i("onPause() - instance: $this")
+    super.onPause()
+  }
+
+  override fun onStop() {
+    Timber.i("onStop() - instance: $this")
+    saveDogCountToPrefs()
+    super.onStop()
+  }
+
+  override fun onDestroyView() {
+    Timber.i("onDestroyView() - instance: $this")
+    super.onDestroyView()
+  }
+
+  override fun onDestroy() {
+    Timber.i("onDestroy() - instance: $this")
+    super.onDestroy()
   }
 
   private fun readDogCountFromPrefs() {
@@ -75,22 +126,6 @@ class MainFragment : Fragment() {
       middleDogCount = sharedPref.getInt(PREFS_KEY_MIDDLE_DOG, 0)
       bigDogCount = sharedPref.getInt(PREFS_KEY_BIG_DOG, 0)
     }
-  }
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_main, container, false)
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    renderViewModelState()
-    setupSmallDogViewsClickListeners()
-    setupMiddleDogViewsClickListeners()
-    setupBigDogViewsClickListeners()
   }
 
   private fun renderViewModelState() {
@@ -172,11 +207,6 @@ class MainFragment : Fragment() {
     viewModel.middleDogCount= 0
     viewModel.bigDogCount = 0
     renderViewModelState()
-  }
-
-  override fun onStop() {
-    saveDogCountToPrefs()
-    super.onStop()
   }
 
   private fun saveDogCountToPrefs() {

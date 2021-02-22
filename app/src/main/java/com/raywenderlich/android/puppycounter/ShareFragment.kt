@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -67,7 +68,55 @@ class ShareFragment : Fragment() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    Timber.i("onCreate() - instance: $this")
     readArguments()
+  }
+
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    Timber.i("onCreateView() - instance: $this")
+    return inflater.inflate(R.layout.fragment_share, container, false)
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    Timber.i("onViewCreated() - instance: $this")
+    populateDogCountInfo(view)
+    setOnShareBtnClickListener(view)
+    openDialogIfNeeded()
+  }
+
+  override fun onStart() {
+    super.onStart()
+    Timber.i("onStart() - instance: $this")
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Timber.i("onResume() - instance: $this")
+  }
+
+  override fun onPause() {
+    Timber.i("onPause() - instance: $this")
+    super.onPause()
+  }
+
+  override fun onStop() {
+    Timber.i("onStop() - instance: $this")
+    super.onStop()
+  }
+
+  override fun onDestroyView() {
+    Timber.i("onDestroyView() - instance: $this")
+    super.onDestroyView()
+  }
+
+  override fun onDestroy() {
+    Timber.i("onDestroy() - instance: $this")
+    super.onDestroy()
   }
 
   private fun readArguments() {
@@ -78,21 +127,6 @@ class ShareFragment : Fragment() {
       viewModel.middleDogCount = middleDogCount
       viewModel.bigDogCount = bigDogCount
     }
-  }
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_share, container, false)
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    populateDogCountInfo(view)
-    setOnShareBtnClickListener(view)
-    openDialogIfNeeded()
   }
 
   private fun populateDogCountInfo(view: View) {
