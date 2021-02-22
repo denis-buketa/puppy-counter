@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
-import com.raywenderlich.android.puppycounter.model.DogCount
+import androidx.cardview.widget.CardView
 import com.raywenderlich.android.puppycounter.R
 import com.raywenderlich.android.puppycounter.share.ShareActivity
 import timber.log.Timber
@@ -52,49 +53,109 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    Timber.i("onCreate() - instance: $this")
-    setContentView(R.layout.activity_main)
-
-    // Only add fragment to this activity if activity is not being recreated (e.g. config change)
-    if (savedInstanceState == null) {
-      supportFragmentManager.commit {
-        setReorderingAllowed(true)
-        add(R.id.fragmentContainerView, MainFragment(), MainFragment.TAG)
+  var smallDogCount: Int = 0
+    set(value) {
+      field = if (value < 0) {
+        0
+      } else {
+        value
       }
     }
-  }
 
-  override fun onStart() {
-    super.onStart()
-    Timber.i("onStart() - instance: $this")
-  }
+  var middleDogCount: Int = 0
+    set(value) {
+      field = if (value < 0) {
+        0
+      } else {
+        value
+      }
+    }
 
-  override fun onResume() {
-    super.onResume()
-    Timber.i("onResume() - instance: $this")
-  }
+  var bigDogCount: Int = 0
+    set(value) {
+      field = if (value < 0) {
+        0
+      } else {
+        value
+      }
+    }
 
-  override fun onPause() {
-    Timber.i("onPause() - instance: $this")
-    super.onPause()
-  }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.fragment_main)
 
-  override fun onStop() {
-    Timber.i("onStop() - instance: $this")
-    super.onStop()
-  }
-
-  override fun onDestroy() {
-    Timber.i("onDestroy() - instance: $this")
-    super.onDestroy()
+    setupSmallDogViewsClickListeners()
+    setupMiddleDogViewsClickListeners()
+    setupBigDogViewsClickListeners()
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     val inflater: MenuInflater = menuInflater
     inflater.inflate(R.menu.menu_activity_main, menu)
     return true
+  }
+
+  private fun renderViewModelState() {
+    updateSmallDogLabel()
+    updateMiddleDogLabel()
+    updateBigDogLabel()
+  }
+
+  private fun setupSmallDogViewsClickListeners() {
+    findViewById<CardView>(R.id.smallDog).setOnClickListener {
+      smallDogCount += 1
+      updateSmallDogLabel()
+    }
+    findViewById<ImageView>(R.id.smallDogMinusBtn).setOnClickListener {
+      smallDogCount -= 1
+      updateSmallDogLabel()
+    }
+    findViewById<ImageView>(R.id.smallDogPlusBtn).setOnClickListener {
+      smallDogCount += 1
+      updateSmallDogLabel()
+    }
+  }
+
+  private fun updateSmallDogLabel() {
+    findViewById<TextView>(R.id.smallDogCountLabel)?.text = smallDogCount.toString()
+  }
+
+  private fun setupMiddleDogViewsClickListeners() {
+    findViewById<CardView>(R.id.middleDog).setOnClickListener {
+      middleDogCount += 1
+      updateMiddleDogLabel()
+    }
+    findViewById<ImageView>(R.id.middleDogMinusBtn).setOnClickListener {
+      middleDogCount -= 1
+      updateMiddleDogLabel()
+    }
+    findViewById<ImageView>(R.id.middleDogPlusBtn).setOnClickListener {
+      middleDogCount += 1
+      updateMiddleDogLabel()
+    }
+  }
+
+  private fun updateMiddleDogLabel() {
+    findViewById<TextView>(R.id.middleDogCountLabel)?.text = middleDogCount.toString()
+  }
+
+  private fun setupBigDogViewsClickListeners() {
+    findViewById<CardView>(R.id.bigDog).setOnClickListener {
+      bigDogCount += 1
+      updateBigDogLabel()
+    }
+    findViewById<ImageView>(R.id.bigDogMinusBtn).setOnClickListener {
+      bigDogCount -= 1
+      updateBigDogLabel()
+    }
+    findViewById<ImageView>(R.id.bigDogPlusBtn).setOnClickListener {
+      bigDogCount += 1
+      updateBigDogLabel()
+    }
+  }
+
+  private fun updateBigDogLabel() {
+    findViewById<TextView>(R.id.bigDogCountLabel)?.text = bigDogCount.toString()
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -104,7 +165,7 @@ class MainActivity : AppCompatActivity() {
         true
       }
       R.id.clearAction -> {
-        notifyClearAll()
+        clearAll()
         true
       }
       else -> super.onOptionsItemSelected(item)
@@ -112,19 +173,14 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun startShareActivity() {
-    val intent = ShareActivity.createIntent(this, getDogCount())
+    val intent = ShareActivity.createIntent(this)
     startActivity(intent)
   }
 
-  private fun getDogCount(): DogCount {
-    val mainFragment = supportFragmentManager.findFragmentByTag(MainFragment.TAG) as? MainFragment
-    requireNotNull(mainFragment)
-    return mainFragment.getDogCount()
-  }
-
-  private fun notifyClearAll() {
-    val mainFragment = supportFragmentManager.findFragmentByTag(MainFragment.TAG) as? MainFragment
-    requireNotNull(mainFragment)
-    mainFragment.clearAllCounts()
+  private fun clearAll() {
+    smallDogCount = 0
+    middleDogCount = 0
+    bigDogCount = 0
+    renderViewModelState()
   }
 }
