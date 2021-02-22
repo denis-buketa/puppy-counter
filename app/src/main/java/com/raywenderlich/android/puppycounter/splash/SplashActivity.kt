@@ -1,6 +1,4 @@
-package com.raywenderlich.android.puppycounter
-
-import androidx.lifecycle.ViewModel
+package com.raywenderlich.android.puppycounter.splash
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -41,32 +39,27 @@ import androidx.lifecycle.ViewModel
  * DEALINGS IN THE SOFTWARE.
  */
 
-class MainViewModel : ViewModel() {
+import android.content.Intent
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
+import com.raywenderlich.android.puppycounter.R
+import com.raywenderlich.android.puppycounter.main.MainActivity
 
-  var smallDogCount: Int = 0
-    set(value) {
-      field = if (value < 0) {
-        0
-      } else {
-        value
-      }
-    }
+class SplashActivity : AppCompatActivity() {
 
-  var middleDogCount: Int = 0
-    set(value) {
-      field = if (value < 0) {
-        0
-      } else {
-        value
-      }
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_splash)
 
-  var bigDogCount: Int = 0
-    set(value) {
-      field = if (value < 0) {
-        0
-      } else {
-        value
-      }
-    }
+    // Show Main Activity after one second
+    Handler(Looper.myLooper()!!).postDelayed(
+        {
+          startActivity(Intent(this, MainActivity::class.java))
+          finish()
+        },
+        1000L
+    )
+  }
 }

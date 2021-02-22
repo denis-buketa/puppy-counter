@@ -1,4 +1,4 @@
-package com.raywenderlich.android.puppycounter
+package com.raywenderlich.android.puppycounter.main
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.raywenderlich.android.puppycounter.model.DogCount
+import com.raywenderlich.android.puppycounter.R
 import timber.log.Timber
 
 /*

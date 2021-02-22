@@ -1,7 +1,13 @@
-package com.raywenderlich.android.puppycounter
+package com.raywenderlich.android.puppycounter.share
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
+import com.raywenderlich.android.puppycounter.model.DogCount
+import com.raywenderlich.android.puppycounter.R
+import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -42,9 +48,62 @@ import kotlinx.parcelize.Parcelize
  * DEALINGS IN THE SOFTWARE.
  */
 
-@Parcelize
-data class DogCount(
-  val smallDogCount: Int,
-  val middleDogCount: Int,
-  val bigDogCount: Int
-) : Parcelable
+private const val EXTRA_DOG_COUNT = "ShareActivity_extra_dog_count"
+
+class ShareActivity : AppCompatActivity() {
+
+  companion object {
+
+    fun createIntent(context: Context, dogCount: DogCount) =
+      Intent(context, ShareActivity::class.java).apply {
+        putExtra(EXTRA_DOG_COUNT, dogCount)
+      }
+  }
+
+  private lateinit var dogCount: DogCount
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    Timber.i("onCreate() - instance: $this")
+    setContentView(R.layout.activity_share)
+    readExtras()
+    if (savedInstanceState == null) {
+      supportFragmentManager.commit {
+        setReorderingAllowed(true)
+        add(R.id.fragmentContainerView, ShareFragment.create(dogCount))
+      }
+    }
+  }
+
+  override fun onStart() {
+    super.onStart()
+    Timber.i("onStart() - instance: $this")
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Timber.i("onResume() - instance: $this")
+  }
+
+  override fun onPause() {
+    Timber.i("onPause() - instance: $this")
+    super.onPause()
+  }
+
+  override fun onStop() {
+    Timber.i("onStop() - instance: $this")
+    super.onStop()
+  }
+
+  override fun onDestroy() {
+    Timber.i("onDestroy() - instance: $this")
+    super.onDestroy()
+  }
+
+  private fun readExtras() {
+    val dogCountExtra: DogCount? = intent.extras?.getParcelable(EXTRA_DOG_COUNT)
+    requireNotNull(dogCountExtra)
+    dogCount = dogCountExtra
+  }
+
+}

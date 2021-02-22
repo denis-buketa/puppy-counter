@@ -1,4 +1,4 @@
-package com.raywenderlich.android.puppycounter
+package com.raywenderlich.android.puppycounter.main
 
 import androidx.lifecycle.ViewModel
 
@@ -41,11 +41,32 @@ import androidx.lifecycle.ViewModel
  * DEALINGS IN THE SOFTWARE.
  */
 
-class ShareViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
   var smallDogCount: Int = 0
-  var middleDogCount: Int = 0
-  var bigDogCount: Int = 0
+    set(value) {
+      field = if (value < 0) {
+        0
+      } else {
+        value
+      }
+    }
 
-  var dialogOpen: Boolean = false
+  var middleDogCount: Int = 0
+    set(value) {
+      field = if (value < 0) {
+        0
+      } else {
+        value
+      }
+    }
+
+  var bigDogCount: Int = 0
+    set(value) {
+      field = if (value < 0) {
+        0
+      } else {
+        value
+      }
+    }
 }

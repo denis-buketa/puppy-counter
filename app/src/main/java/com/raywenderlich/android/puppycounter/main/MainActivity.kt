@@ -1,10 +1,14 @@
-package com.raywenderlich.android.puppycounter
+package com.raywenderlich.android.puppycounter.main
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import com.raywenderlich.android.puppycounter.model.DogCount
+import com.raywenderlich.android.puppycounter.R
+import com.raywenderlich.android.puppycounter.share.ShareActivity
 import timber.log.Timber
 
 /*
@@ -46,29 +50,18 @@ import timber.log.Timber
  * DEALINGS IN THE SOFTWARE.
  */
 
-private const val EXTRA_DOG_COUNT = "ShareActivity_extra_dog_count"
-
-class ShareActivity : AppCompatActivity() {
-
-  companion object {
-
-    fun createIntent(context: Context, dogCount: DogCount) =
-      Intent(context, ShareActivity::class.java).apply {
-        putExtra(EXTRA_DOG_COUNT, dogCount)
-      }
-  }
-
-  private lateinit var dogCount: DogCount
+class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     Timber.i("onCreate() - instance: $this")
-    setContentView(R.layout.activity_share)
-    readExtras()
+    setContentView(R.layout.activity_main)
+
+    // Only add fragment to this activity if activity is not being recreated (e.g. config change)
     if (savedInstanceState == null) {
       supportFragmentManager.commit {
         setReorderingAllowed(true)
-        add(R.id.fragmentContainerView, ShareFragment.create(dogCount))
+        add(R.id.fragmentContainerView, MainFragment(), MainFragment.TAG)
       }
     }
   }
@@ -98,10 +91,40 @@ class ShareActivity : AppCompatActivity() {
     super.onDestroy()
   }
 
-  private fun readExtras() {
-    val dogCountExtra: DogCount? = intent.extras?.getParcelable(EXTRA_DOG_COUNT)
-    requireNotNull(dogCountExtra)
-    dogCount = dogCountExtra
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    val inflater: MenuInflater = menuInflater
+    inflater.inflate(R.menu.menu_activity_main, menu)
+    return true
   }
 
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.shareAction -> {
+        startShareActivity()
+        true
+      }
+      R.id.clearAction -> {
+        notifyClearAll()
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
+
+  private fun startShareActivity() {
+    val intent = ShareActivity.createIntent(this, getDogCount())
+    startActivity(intent)
+  }
+
+  private fun getDogCount(): DogCount {
+    val mainFragment = supportFragmentManager.findFragmentByTag(MainFragment.TAG) as? MainFragment
+    requireNotNull(mainFragment)
+    return mainFragment.getDogCount()
+  }
+
+  private fun notifyClearAll() {
+    val mainFragment = supportFragmentManager.findFragmentByTag(MainFragment.TAG) as? MainFragment
+    requireNotNull(mainFragment)
+    mainFragment.clearAllCounts()
+  }
 }
