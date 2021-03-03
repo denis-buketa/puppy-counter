@@ -1,3 +1,18 @@
 <resources>
   <string name="app_name">Puppy Counter</string>
+
+  <string name="small_dog_stats">Small: %s</string>
+  <string name="middle_dog_stats">Middle: %s</string>
+  <string name="big_dog_stats">Big: %s</string>
+
+  <string name="share_dialog_title">Are you sure you want to share these stats?</string>
+  <string name="share_dialog_yes">Yes</string>
+  <string name="share_dialog_no">No</string>
+  <string name="share_action">Share</string>
+
+  <string name="puppies_happy">Puppies Happy :]</string>
+  <string name="puppies_sad">Puppies Sad :[</string>
+
+  <string name="menu_share">Share</string>
+  <string name="menu_clear_all">Clear All</string>
 </resources>

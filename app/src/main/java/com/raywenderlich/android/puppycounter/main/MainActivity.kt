@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.raywenderlich.android.puppycounter.R
 import com.raywenderlich.android.puppycounter.share.ShareActivity
-import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -55,38 +54,34 @@ class MainActivity : AppCompatActivity() {
 
   var smallDogCount: Int = 0
     set(value) {
-      field = if (value < 0) {
-        0
-      } else {
-        value
-      }
+      field = validateValue(value)
     }
 
   var middleDogCount: Int = 0
     set(value) {
-      field = if (value < 0) {
-        0
-      } else {
-        value
-      }
+      field = validateValue(value)
     }
 
   var bigDogCount: Int = 0
     set(value) {
-      field = if (value < 0) {
-        0
-      } else {
-        value
-      }
+      field = validateValue(value)
     }
+
+  private lateinit var smallDogCountLabel: TextView
+  private lateinit var middleDogCountLabel: TextView
+  private lateinit var bigDogCountLabel: TextView
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.fragment_main)
 
+    findViews()
+
     setupSmallDogViewsClickListeners()
     setupMiddleDogViewsClickListeners()
     setupBigDogViewsClickListeners()
+
+    renderViewModelState()
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -95,68 +90,67 @@ class MainActivity : AppCompatActivity() {
     return true
   }
 
-  private fun renderViewModelState() {
-    updateSmallDogLabel()
-    updateMiddleDogLabel()
-    updateBigDogLabel()
+  private fun findViews() {
+    smallDogCountLabel = findViewById(R.id.smallDogCountLabel)
+    middleDogCountLabel = findViewById(R.id.middleDogCountLabel)
+    bigDogCountLabel = findViewById(R.id.bigDogCountLabel)
   }
 
   private fun setupSmallDogViewsClickListeners() {
     findViewById<CardView>(R.id.smallDog).setOnClickListener {
       smallDogCount += 1
-      updateSmallDogLabel()
+      renderViewModelState()
     }
     findViewById<ImageView>(R.id.smallDogMinusBtn).setOnClickListener {
       smallDogCount -= 1
-      updateSmallDogLabel()
+      renderViewModelState()
     }
     findViewById<ImageView>(R.id.smallDogPlusBtn).setOnClickListener {
       smallDogCount += 1
-      updateSmallDogLabel()
+      renderViewModelState()
     }
-  }
-
-  private fun updateSmallDogLabel() {
-    findViewById<TextView>(R.id.smallDogCountLabel)?.text = smallDogCount.toString()
   }
 
   private fun setupMiddleDogViewsClickListeners() {
     findViewById<CardView>(R.id.middleDog).setOnClickListener {
       middleDogCount += 1
-      updateMiddleDogLabel()
+      renderViewModelState()
     }
     findViewById<ImageView>(R.id.middleDogMinusBtn).setOnClickListener {
       middleDogCount -= 1
-      updateMiddleDogLabel()
+      renderViewModelState()
     }
     findViewById<ImageView>(R.id.middleDogPlusBtn).setOnClickListener {
       middleDogCount += 1
-      updateMiddleDogLabel()
+      renderViewModelState()
     }
-  }
-
-  private fun updateMiddleDogLabel() {
-    findViewById<TextView>(R.id.middleDogCountLabel)?.text = middleDogCount.toString()
   }
 
   private fun setupBigDogViewsClickListeners() {
     findViewById<CardView>(R.id.bigDog).setOnClickListener {
       bigDogCount += 1
-      updateBigDogLabel()
+      renderViewModelState()
     }
     findViewById<ImageView>(R.id.bigDogMinusBtn).setOnClickListener {
       bigDogCount -= 1
-      updateBigDogLabel()
+      renderViewModelState()
     }
     findViewById<ImageView>(R.id.bigDogPlusBtn).setOnClickListener {
       bigDogCount += 1
-      updateBigDogLabel()
+      renderViewModelState()
     }
   }
 
-  private fun updateBigDogLabel() {
-    findViewById<TextView>(R.id.bigDogCountLabel)?.text = bigDogCount.toString()
+  private fun renderViewModelState() {
+    smallDogCountLabel.text = smallDogCount.toString()
+    middleDogCountLabel.text = middleDogCount.toString()
+    bigDogCountLabel.text = bigDogCount.toString()
   }
+
+  /**
+   * Ensures negative values can't be set to dogs count.
+   */
+  private fun validateValue(value: Int): Int = if (value < 0) 0 else value
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {

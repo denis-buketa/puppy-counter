@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -55,10 +56,26 @@ class ShareActivity : AppCompatActivity() {
     fun createIntent(context: Context) = Intent(context, ShareActivity::class.java)
   }
 
+  private lateinit var smallDogStatsLabel: TextView
+  private lateinit var middleDogStatsLabel: TextView
+  private lateinit var bigDogStatsLabel: TextView
+
+  private var smallDogCount = 0
+  private var middleDogCount = 0
+  private var bigDogCount = 0
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.fragment_share)
+    findViews()
     setOnShareBtnClickListener()
+    renderViewModelState()
+  }
+
+  private fun findViews() {
+    smallDogStatsLabel = findViewById(R.id.smallDogStats)
+    middleDogStatsLabel = findViewById(R.id.middleDogStats)
+    bigDogStatsLabel = findViewById(R.id.bigDogStats)
   }
 
   private fun setOnShareBtnClickListener() {
@@ -67,17 +84,23 @@ class ShareActivity : AppCompatActivity() {
     }
   }
 
+  private fun renderViewModelState() {
+    smallDogStatsLabel.text = getString(R.string.small_dog_stats, smallDogCount.toString())
+    middleDogStatsLabel.text = getString(R.string.middle_dog_stats, middleDogCount.toString())
+    bigDogStatsLabel.text = getString(R.string.big_dog_stats, bigDogCount.toString())
+  }
+
   private fun openShareDialog() {
     AlertDialog.Builder(this)
-      .setTitle("Are you sure you want to share these stats?")
-      .setPositiveButton("Yes") { dialog, _ ->
-        dialog.dismiss()
-        Toast.makeText(this, "Puppies Happy :]", Toast.LENGTH_SHORT).show()
-      }
-      .setNegativeButton("No") { dialog, _ ->
-        dialog.dismiss()
-        Toast.makeText(this, "Puppies Sad :[", Toast.LENGTH_SHORT).show()
-      }
-      .show()
+        .setTitle(R.string.share_dialog_title)
+        .setPositiveButton(R.string.share_dialog_yes) { dialog, _ ->
+          dialog.dismiss()
+          Toast.makeText(this, R.string.puppies_happy, Toast.LENGTH_SHORT).show()
+        }
+        .setNegativeButton(R.string.share_dialog_no) { dialog, _ ->
+          dialog.dismiss()
+          Toast.makeText(this, R.string.puppies_sad, Toast.LENGTH_SHORT).show()
+        }
+        .show()
   }
 }

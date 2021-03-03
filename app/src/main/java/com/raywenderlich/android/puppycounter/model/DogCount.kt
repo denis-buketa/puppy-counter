@@ -44,7 +44,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class DogCount(
-  val smallDogCount: Int,
-  val middleDogCount: Int,
-  val bigDogCount: Int
+    val smallDogCount: Int,
+    val middleDogCount: Int,
+    val bigDogCount: Int
 ) : Parcelable
