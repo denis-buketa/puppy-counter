@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.puppycounter.R
+import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -64,12 +65,38 @@ class ShareActivity : AppCompatActivity() {
   private var middleDogCount = 0
   private var bigDogCount = 0
 
+  override fun onStart() {
+    super.onStart()
+    Timber.i("PuppyCounter - ShareActivity - onStart()")
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    Timber.i("PuppyCounter - ShareActivity - onCreate()")
     setContentView(R.layout.fragment_share)
     findViews()
     setOnShareBtnClickListener()
     renderViewModelState()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Timber.i("PuppyCounter - ShareActivity - onResume()")
+  }
+
+  override fun onPause() {
+    super.onPause()
+    Timber.i("PuppyCounter - ShareActivity - onPause()")
+  }
+
+  override fun onStop() {
+    super.onStop()
+    Timber.i("PuppyCounter - ShareActivity - onStop()")
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    Timber.i("PuppyCounter - ShareActivity - onDestroy()")
   }
 
   private fun findViews() {

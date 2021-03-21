@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.raywenderlich.android.puppycounter.R
 import com.raywenderlich.android.puppycounter.share.ShareActivity
+import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -71,8 +72,14 @@ class MainActivity : AppCompatActivity() {
   private lateinit var middleDogCountLabel: TextView
   private lateinit var bigDogCountLabel: TextView
 
+  override fun onStart() {
+    super.onStart()
+    Timber.i("PuppyCounter - MainActivity - onStart()")
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    Timber.i("PuppyCounter - MainActivity - onCreate()")
     setContentView(R.layout.fragment_main)
 
     findViews()
@@ -82,6 +89,26 @@ class MainActivity : AppCompatActivity() {
     setupBigDogViewsClickListeners()
 
     renderViewModelState()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Timber.i("PuppyCounter - MainActivity - onResume()")
+  }
+
+  override fun onPause() {
+    super.onPause()
+    Timber.i("PuppyCounter - MainActivity - onPause()")
+  }
+
+  override fun onStop() {
+    super.onStop()
+    Timber.i("PuppyCounter - MainActivity - onStop()")
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    Timber.i("PuppyCounter - MainActivity - onDestroy()")
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
