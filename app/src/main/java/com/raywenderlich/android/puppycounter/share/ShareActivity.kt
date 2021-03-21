@@ -76,12 +76,12 @@ class ShareActivity : AppCompatActivity() {
     setContentView(R.layout.fragment_share)
     findViews()
     setOnShareBtnClickListener()
-    renderViewModelState()
   }
 
   override fun onResume() {
     super.onResume()
     Timber.i("PuppyCounter - ShareActivity - onResume()")
+    renderViewModelState()
   }
 
   override fun onPause() {

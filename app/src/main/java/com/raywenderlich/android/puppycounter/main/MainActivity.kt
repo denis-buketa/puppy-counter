@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.raywenderlich.android.puppycounter.R
+import com.raywenderlich.android.puppycounter.model.DogCount
 import com.raywenderlich.android.puppycounter.share.ShareActivity
 import timber.log.Timber
 
@@ -51,6 +52,8 @@ import timber.log.Timber
  * DEALINGS IN THE SOFTWARE.
  */
 
+private const val STATE_DOG_COUNT = "state_dog_count"
+
 class MainActivity : AppCompatActivity() {
 
   var smallDogCount: Int = 0
@@ -87,13 +90,12 @@ class MainActivity : AppCompatActivity() {
     setupSmallDogViewsClickListeners()
     setupMiddleDogViewsClickListeners()
     setupBigDogViewsClickListeners()
-
-    renderViewModelState()
   }
 
   override fun onResume() {
     super.onResume()
     Timber.i("PuppyCounter - MainActivity - onResume()")
+    renderViewModelState()
   }
 
   override fun onPause() {
@@ -109,6 +111,35 @@ class MainActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     Timber.i("PuppyCounter - MainActivity - onDestroy()")
+  }
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    Timber.i("PuppyCounter - MainActivity - onSaveInstanceState()")
+
+    // Save the dog count state
+    outState.run {
+      val dogCount = DogCount(smallDogCount, middleDogCount, bigDogCount)
+      putParcelable(STATE_DOG_COUNT, dogCount)
+    }
+
+    // Always call the superclass so it can save the view hierarchy state
+    super.onSaveInstanceState(outState)
+  }
+
+  override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+    Timber.i("PuppyCounter - MainActivity - onRestoreInstanceState()")
+
+    // Always call the superclass so it can restore the view hierarchy
+    super.onRestoreInstanceState(savedInstanceState)
+
+    with(savedInstanceState) {
+      val dogCount: DogCount? = getParcelable(STATE_DOG_COUNT)
+      dogCount?.let {
+        smallDogCount = it.smallDogCount
+        middleDogCount = it.middleDogCount
+        bigDogCount = it.bigDogCount
+      }
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
