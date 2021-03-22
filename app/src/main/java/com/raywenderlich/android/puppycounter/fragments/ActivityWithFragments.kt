@@ -129,7 +129,7 @@ class ActivityWithFragments  : AppCompatActivity() {
   private fun openShareScreen() {
     supportFragmentManager.commit {
       setReorderingAllowed(true)
-      add(R.id.fragmentContainerView, ShareFragment.create(getDogCount()), ShareFragment.TAG)
+      replace(R.id.fragmentContainerView, ShareFragment.create(getDogCount()), ShareFragment.TAG)
       addToBackStack(null)
     }
   }
