@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.puppycounter.R
+import com.raywenderlich.android.puppycounter.model.DogCount
 import timber.log.Timber
 
 /*
@@ -54,6 +55,8 @@ class ShareActivity : AppCompatActivity() {
 
   companion object {
 
+    const val EXTRA_DOG_COUNT = "extra_dog_count"
+
     fun createIntent(context: Context) = Intent(context, ShareActivity::class.java)
   }
 
@@ -74,8 +77,22 @@ class ShareActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     Timber.i("PuppyCounter - ShareActivity - onCreate()")
     setContentView(R.layout.fragment_share)
+
+    // Read extras that MainActivity sent with the intent
+    readExtras()
+
     findViews()
     setOnShareBtnClickListener()
+  }
+
+  private fun readExtras() = intent.extras?.run {
+    Timber.i("PuppyCounter - ShareActivity - readExtras()")
+    val dogCount: DogCount? = getParcelable(EXTRA_DOG_COUNT)
+    dogCount?.let {
+      smallDogCount = it.smallDogCount
+      middleDogCount = it.middleDogCount
+      bigDogCount = it.bigDogCount
+    }
   }
 
   override fun onResume() {

@@ -226,6 +226,13 @@ class MainActivity : AppCompatActivity() {
 
   private fun startShareActivity() {
     val intent = ShareActivity.createIntent(this)
+
+    Timber.i("PuppyCounter - MainActivity - create ShareActivity Intent")
+    // 1. Create DogCount instance
+    val dogCount = DogCount(smallDogCount, middleDogCount, bigDogCount)
+    // 2. Add DogCount state to intent
+    intent.putExtra(ShareActivity.EXTRA_DOG_COUNT, dogCount)
+
     startActivity(intent)
   }
 
