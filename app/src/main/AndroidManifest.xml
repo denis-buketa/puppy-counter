@@ -23,12 +23,16 @@
     </activity>
 
     <activity
-      android:name=".main.MainActivity"
+      android:name=".activities.MainActivity"
       android:theme="@style/AppTheme" />
 
     <activity
-      android:name=".share.ShareActivity"
+      android:name=".activities.ShareActivity"
       android:theme="@style/AppTheme" />
+
+    <activity
+        android:name=".fragments.ActivityWithFragments"
+        android:theme="@style/AppTheme" />
 
   </application>
 

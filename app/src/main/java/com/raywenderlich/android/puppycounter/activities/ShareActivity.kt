@@ -1,4 +1,4 @@
-package com.raywenderlich.android.puppycounter.share
+package com.raywenderlich.android.puppycounter.activities
 
 import android.content.Context
 import android.content.Intent
@@ -76,7 +76,7 @@ class ShareActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     Timber.i("PuppyCounter - ShareActivity - onCreate()")
-    setContentView(R.layout.fragment_share)
+    setContentView(R.layout.layout_share)
 
     // Read extras that MainActivity sent with the intent
     readExtras()

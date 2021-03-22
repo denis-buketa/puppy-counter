@@ -1,4 +1,8 @@
-package com.raywenderlich.android.puppycounter.splash
+package com.raywenderlich.android.puppycounter.fragments.viewmodels
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -39,28 +43,10 @@ package com.raywenderlich.android.puppycounter.splash
  * DEALINGS IN THE SOFTWARE.
  */
 
-import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import androidx.appcompat.app.AppCompatActivity
-import com.raywenderlich.android.puppycounter.R
-import com.raywenderlich.android.puppycounter.activities.MainActivity
-import com.raywenderlich.android.puppycounter.fragments.ActivityWithFragments
+class MainViewModel : ViewModel() {
 
-class SplashActivity : AppCompatActivity() {
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_splash)
-
-    // Show Main Activity after one second
-    Handler(Looper.myLooper()!!).postDelayed(
-        {
-          startActivity(Intent(this, MainActivity::class.java))
-          finish()
-        },
-        1000L
-    )
-  }
+  /**
+   * Ensures negative values can't be set to dogs count.
+   */
+  private fun validateValue(value: Int): Int = if (value < 0) 0 else value
 }

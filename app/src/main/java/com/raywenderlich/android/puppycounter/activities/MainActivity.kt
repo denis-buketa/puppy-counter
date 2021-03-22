@@ -1,4 +1,4 @@
-package com.raywenderlich.android.puppycounter.main
+package com.raywenderlich.android.puppycounter.activities
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.raywenderlich.android.puppycounter.R
 import com.raywenderlich.android.puppycounter.model.DogCount
-import com.raywenderlich.android.puppycounter.share.ShareActivity
 import timber.log.Timber
 
 /*
@@ -83,7 +82,7 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     Timber.i("PuppyCounter - MainActivity - onCreate()")
-    setContentView(R.layout.fragment_main)
+    setContentView(R.layout.layout_main)
 
     findViews()
 
