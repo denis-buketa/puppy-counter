@@ -67,8 +67,8 @@ class MainFragment : Fragment() {
   private lateinit var bigDogCountLabel: TextView
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
     Timber.i("PuppyCounter - MainFragment - onCreate()")
+    super.onCreate(savedInstanceState)
 
     savedInstanceState?.run {
       Timber.i("PuppyCounter - MainFragment - restoreState()")
@@ -87,8 +87,8 @@ class MainFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
     Timber.i("PuppyCounter - MainFragment - onViewCreated()")
+    super.onViewCreated(view, savedInstanceState)
     findViews(view)
     setupSmallDogViewsClickListeners(view)
     setupMiddleDogViewsClickListeners(view)
@@ -96,13 +96,13 @@ class MainFragment : Fragment() {
   }
 
   override fun onStart() {
-    super.onStart()
     Timber.i("PuppyCounter - MainFragment - onStart()")
+    super.onStart()
   }
 
   override fun onResume() {
-    super.onResume()
     Timber.i("PuppyCounter - MainFragment - onResume()")
+    super.onResume()
     renderDogCount()
   }
 

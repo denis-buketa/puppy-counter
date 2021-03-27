@@ -76,8 +76,8 @@ class ShareFragment : Fragment() {
   private lateinit var bigDogStatsLabel: TextView
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
     Timber.i("PuppyCounter - ShareFragment - onCreate()")
+    super.onCreate(savedInstanceState)
     readArguments()
     subscribeToViewModel()
   }
@@ -92,21 +92,21 @@ class ShareFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
     Timber.i("PuppyCounter - ShareFragment - onViewCreated()")
+    super.onViewCreated(view, savedInstanceState)
     findViews(view)
     setOnShareBtnClickListener(view)
     openDialogIfNeeded()
   }
 
   override fun onStart() {
-    super.onStart()
     Timber.i("PuppyCounter - ShareFragment - onStart()")
+    super.onStart()
   }
 
   override fun onResume() {
-    super.onResume()
     Timber.i("PuppyCounter - ShareFragment - onResume()")
+    super.onResume()
   }
 
   override fun onPause() {

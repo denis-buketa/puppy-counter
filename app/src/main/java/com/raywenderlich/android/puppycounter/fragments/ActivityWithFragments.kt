@@ -54,8 +54,8 @@ class ActivityWithFragments  : AppCompatActivity() {
   private var menu: Menu? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
     Timber.i("PuppyCounter - ActivityWithFragments - onCreate()")
+    super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_container)
 
     // Only add fragment to this activity if activity is not being recreated (e.g. config change)
@@ -80,13 +80,13 @@ class ActivityWithFragments  : AppCompatActivity() {
   }
 
   override fun onStart() {
-    super.onStart()
     Timber.i("PuppyCounter - ActivityWithFragments - onStart()")
+    super.onStart()
   }
 
   override fun onResume() {
-    super.onResume()
     Timber.i("PuppyCounter - ActivityWithFragments - onResume()")
+    super.onResume()
   }
 
   override fun onPause() {

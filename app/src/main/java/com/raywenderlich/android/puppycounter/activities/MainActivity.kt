@@ -62,13 +62,13 @@ class MainActivity : AppCompatActivity() {
   private lateinit var bigDogCountLabel: TextView
 
   override fun onStart() {
-    super.onStart()
     Timber.i("PuppyCounter - MainActivity - onStart()")
+    super.onStart()
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
     Timber.i("PuppyCounter - MainActivity - onCreate()")
+    super.onCreate(savedInstanceState)
     setContentView(R.layout.layout_main)
 
     findViews()
@@ -79,24 +79,24 @@ class MainActivity : AppCompatActivity() {
   }
 
   override fun onResume() {
-    super.onResume()
     Timber.i("PuppyCounter - MainActivity - onResume()")
+    super.onResume()
     renderDogCount()
   }
 
   override fun onPause() {
-    super.onPause()
     Timber.i("PuppyCounter - MainActivity - onPause()")
+    super.onPause()
   }
 
   override fun onStop() {
-    super.onStop()
     Timber.i("PuppyCounter - MainActivity - onStop()")
+    super.onStop()
   }
 
   override fun onDestroy() {
-    super.onDestroy()
     Timber.i("PuppyCounter - MainActivity - onDestroy()")
+    super.onDestroy()
   }
 
   override fun onSaveInstanceState(outState: Bundle) {

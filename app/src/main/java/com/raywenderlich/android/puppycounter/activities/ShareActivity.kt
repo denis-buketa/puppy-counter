@@ -69,13 +69,13 @@ class ShareActivity : AppCompatActivity() {
   private var bigDogCount = 0
 
   override fun onStart() {
-    super.onStart()
     Timber.i("PuppyCounter - ShareActivity - onStart()")
+    super.onStart()
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
     Timber.i("PuppyCounter - ShareActivity - onCreate()")
+    super.onCreate(savedInstanceState)
     setContentView(R.layout.layout_share)
 
     // Read extras that MainActivity sent with the intent
@@ -96,24 +96,24 @@ class ShareActivity : AppCompatActivity() {
   }
 
   override fun onResume() {
-    super.onResume()
     Timber.i("PuppyCounter - ShareActivity - onResume()")
+    super.onResume()
     renderViewModelState()
   }
 
   override fun onPause() {
-    super.onPause()
     Timber.i("PuppyCounter - ShareActivity - onPause()")
+    super.onPause()
   }
 
   override fun onStop() {
-    super.onStop()
     Timber.i("PuppyCounter - ShareActivity - onStop()")
+    super.onStop()
   }
 
   override fun onDestroy() {
-    super.onDestroy()
     Timber.i("PuppyCounter - ShareActivity - onDestroy()")
+    super.onDestroy()
   }
 
   private fun findViews() {
