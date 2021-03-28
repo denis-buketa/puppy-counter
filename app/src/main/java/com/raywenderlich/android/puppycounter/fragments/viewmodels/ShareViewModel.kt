@@ -3,6 +3,7 @@ package com.raywenderlich.android.puppycounter.fragments.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.raywenderlich.android.puppycounter.model.DogCount
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -45,20 +46,12 @@ import androidx.lifecycle.ViewModel
 
 class ShareViewModel : ViewModel() {
 
-  private val _smallDogCount: MutableLiveData<Int> by lazy { MutableLiveData<Int>(0) }
-  val smallDogCount: LiveData<Int> = _smallDogCount
-
-  private val _middleDogCount: MutableLiveData<Int> by lazy { MutableLiveData<Int>(0) }
-  val middleDogCount: LiveData<Int> = _middleDogCount
-
-  private val _bigDogCount: MutableLiveData<Int> by lazy { MutableLiveData<Int>(0) }
-  val bigDogCount: LiveData<Int> = _bigDogCount
+  private val _dogCount: MutableLiveData<DogCount> by lazy { MutableLiveData<DogCount>(DogCount()) }
+  val dogCount: LiveData<DogCount> = _dogCount
 
   var dialogOpen: Boolean = false
 
-  fun init(smallDogCount: Int, middleDogCount: Int, bigDogCount: Int) {
-    _smallDogCount.value = smallDogCount
-    _middleDogCount.value = middleDogCount
-    _bigDogCount.value = bigDogCount
+  fun setDogCount(dogCount: DogCount) {
+    _dogCount.value = dogCount
   }
 }

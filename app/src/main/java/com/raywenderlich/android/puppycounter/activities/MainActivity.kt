@@ -152,10 +152,10 @@ class MainActivity : AppCompatActivity() {
     renderDogCount(dogCount)
   }
 
-  private fun renderDogCount(dogCount: DogCount) {
-    smallDogCountLabel.text = dogCount.smallDogCount.toString()
-    middleDogCountLabel.text = dogCount.middleDogCount.toString()
-    bigDogCountLabel.text = dogCount.bigDogCount.toString()
+  private fun renderDogCount(dogCount: DogCount) = with(dogCount) {
+    smallDogCountLabel.text = smallDogCount.toString()
+    middleDogCountLabel.text = middleDogCount.toString()
+    bigDogCountLabel.text = bigDogCount.toString()
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -130,22 +130,14 @@ class ShareFragment : Fragment() {
   }
 
   private fun readArguments() {
-    val dogCountArgument: DogCount? = arguments?.getParcelable(ARGUMENT_DOG_COUNT)
-    requireNotNull(dogCountArgument)
-    with(dogCountArgument) {
-      viewModel.init(smallDogCount, middleDogCount, bigDogCount)
-    }
+    val dogCount: DogCount? = arguments?.getParcelable(ARGUMENT_DOG_COUNT)
+    requireNotNull(dogCount)
+    viewModel.setDogCount(dogCount)
   }
 
   private fun subscribeToViewModel() {
-    viewModel.smallDogCount.observe(this, { value ->
-      smallDogStatsLabel.text = getString(R.string.small_dog_stats, value.toString())
-    })
-    viewModel.middleDogCount.observe(this, { value ->
-      middleDogStatsLabel.text = getString(R.string.middle_dog_stats, value.toString())
-    })
-    viewModel.bigDogCount.observe(this, { value ->
-      bigDogStatsLabel.text = getString(R.string.big_dog_stats, value.toString())
+    viewModel.dogCount.observe(this, { dogCount ->
+      renderDogCount(dogCount)
     })
   }
 
@@ -157,6 +149,18 @@ class ShareFragment : Fragment() {
 
   private fun setOnShareBtnClickListener(view: View) {
     view.findViewById<Button>(R.id.shareBtn).setOnClickListener {
+      openShareDialog()
+    }
+  }
+
+  private fun renderDogCount(dogCount: DogCount) = with(dogCount) {
+    smallDogStatsLabel.text = getString(R.string.small_dog_stats, smallDogCount.toString())
+    middleDogStatsLabel.text = getString(R.string.middle_dog_stats, middleDogCount.toString())
+    bigDogStatsLabel.text = getString(R.string.big_dog_stats, bigDogCount.toString())
+  }
+
+  private fun openDialogIfNeeded() {
+    if (viewModel.dialogOpen) {
       openShareDialog()
     }
   }
@@ -177,11 +181,5 @@ class ShareFragment : Fragment() {
         }
         .show()
     viewModel.dialogOpen = true
-  }
-
-  private fun openDialogIfNeeded() {
-    if (viewModel.dialogOpen) {
-      openShareDialog()
-    }
   }
 }

@@ -82,7 +82,7 @@ class ShareActivity : AppCompatActivity() {
   override fun onResume() {
     Timber.i("PuppyCounter - ShareActivity - onResume()")
     super.onResume()
-    renderViewModelState(dogCount)
+    renderDogCount(dogCount)
   }
 
   override fun onPause() {
@@ -112,7 +112,7 @@ class ShareActivity : AppCompatActivity() {
     }
   }
 
-  private fun renderViewModelState(dogCount: DogCount) = with(dogCount) {
+  private fun renderDogCount(dogCount: DogCount) = with(dogCount) {
     smallDogStatsLabel.text = getString(R.string.small_dog_stats, smallDogCount.toString())
     middleDogStatsLabel.text = getString(R.string.middle_dog_stats, middleDogCount.toString())
     bigDogStatsLabel.text = getString(R.string.big_dog_stats, bigDogCount.toString())

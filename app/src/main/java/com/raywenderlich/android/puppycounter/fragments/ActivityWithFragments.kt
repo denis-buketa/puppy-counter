@@ -58,7 +58,6 @@ class ActivityWithFragments  : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_container)
 
-    // Only add fragment to this activity if activity is not being recreated (e.g. config change)
     if (savedInstanceState == null) {
       supportFragmentManager.commit {
         setReorderingAllowed(true)

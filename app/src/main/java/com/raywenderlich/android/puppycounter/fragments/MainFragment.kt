@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
     const val TAG = "MainFragment"
   }
 
-  private var dogCount: DogCount = DogCount(0, 0, 0)
+  private var dogCount: DogCount = DogCount()
 
   private lateinit var smallDogCountLabel: TextView
   private lateinit var middleDogCountLabel: TextView
@@ -103,7 +103,7 @@ class MainFragment : Fragment() {
   override fun onResume() {
     Timber.i("PuppyCounter - MainFragment - onResume()")
     super.onResume()
-    renderDogCount()
+    renderDogCount(dogCount)
   }
 
   override fun onPause() {
@@ -188,19 +188,18 @@ class MainFragment : Fragment() {
 
   private fun updateDogCount(newDogCount: DogCount) {
     dogCount = newDogCount
-    renderDogCount()
+    renderDogCount(dogCount)
   }
 
-  private fun renderDogCount() {
-    smallDogCountLabel.text = dogCount.smallDogCount.toString()
-    middleDogCountLabel.text = dogCount.middleDogCount.toString()
-    bigDogCountLabel.text = dogCount.bigDogCount.toString()
+  private fun renderDogCount(dogCount: DogCount) = with(dogCount) {
+    smallDogCountLabel.text = smallDogCount.toString()
+    middleDogCountLabel.text = middleDogCount.toString()
+    bigDogCountLabel.text = bigDogCount.toString()
   }
 
   fun getDogCount(): DogCount = dogCount
 
   fun clearAllCounts() {
-    dogCount = DogCount()
-    renderDogCount()
+    updateDogCount(DogCount())
   }
 }
