@@ -64,9 +64,7 @@ class ShareActivity : AppCompatActivity() {
   private lateinit var middleDogStatsLabel: TextView
   private lateinit var bigDogStatsLabel: TextView
 
-  private var smallDogCount = 0
-  private var middleDogCount = 0
-  private var bigDogCount = 0
+  private var dogCount: DogCount = DogCount()
 
   override fun onStart() {
     Timber.i("PuppyCounter - ShareActivity - onStart()")
@@ -77,28 +75,14 @@ class ShareActivity : AppCompatActivity() {
     Timber.i("PuppyCounter - ShareActivity - onCreate()")
     super.onCreate(savedInstanceState)
     setContentView(R.layout.layout_share)
-
-    // Read extras that MainActivity sent with the intent
-    readExtras()
-
     findViews()
     setOnShareBtnClickListener()
-  }
-
-  private fun readExtras() = intent.extras?.run {
-    Timber.i("PuppyCounter - ShareActivity - readExtras()")
-    val dogCount: DogCount? = getParcelable(EXTRA_DOG_COUNT)
-    dogCount?.let {
-      smallDogCount = it.smallDogCount
-      middleDogCount = it.middleDogCount
-      bigDogCount = it.bigDogCount
-    }
   }
 
   override fun onResume() {
     Timber.i("PuppyCounter - ShareActivity - onResume()")
     super.onResume()
-    renderViewModelState()
+    renderViewModelState(dogCount)
   }
 
   override fun onPause() {
@@ -128,7 +112,7 @@ class ShareActivity : AppCompatActivity() {
     }
   }
 
-  private fun renderViewModelState() {
+  private fun renderViewModelState(dogCount: DogCount) = with(dogCount) {
     smallDogStatsLabel.text = getString(R.string.small_dog_stats, smallDogCount.toString())
     middleDogStatsLabel.text = getString(R.string.middle_dog_stats, middleDogCount.toString())
     bigDogStatsLabel.text = getString(R.string.big_dog_stats, bigDogCount.toString())
