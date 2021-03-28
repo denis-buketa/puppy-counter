@@ -1,4 +1,4 @@
-package com.raywenderlich.android.puppycounter.share
+package com.raywenderlich.android.puppycounter.activities
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.puppycounter.R
+import com.raywenderlich.android.puppycounter.model.DogCount
+import timber.log.Timber
 
 /*
  * Copyright (c) 2021 Razeware LLC
@@ -53,6 +55,8 @@ class ShareActivity : AppCompatActivity() {
 
   companion object {
 
+    const val EXTRA_DOG_COUNT = "extra_dog_count"
+
     fun createIntent(context: Context) = Intent(context, ShareActivity::class.java)
   }
 
@@ -60,16 +64,40 @@ class ShareActivity : AppCompatActivity() {
   private lateinit var middleDogStatsLabel: TextView
   private lateinit var bigDogStatsLabel: TextView
 
-  private var smallDogCount = 0
-  private var middleDogCount = 0
-  private var bigDogCount = 0
+  private var dogCount: DogCount = DogCount()
+
+  override fun onStart() {
+    Timber.i("PuppyCounter - ShareActivity - onStart()")
+    super.onStart()
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    Timber.i("PuppyCounter - ShareActivity - onCreate()")
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.fragment_share)
+    setContentView(R.layout.layout_share)
     findViews()
     setOnShareBtnClickListener()
-    renderViewModelState()
+  }
+
+  override fun onResume() {
+    Timber.i("PuppyCounter - ShareActivity - onResume()")
+    super.onResume()
+    renderDogCount(dogCount)
+  }
+
+  override fun onPause() {
+    Timber.i("PuppyCounter - ShareActivity - onPause()")
+    super.onPause()
+  }
+
+  override fun onStop() {
+    Timber.i("PuppyCounter - ShareActivity - onStop()")
+    super.onStop()
+  }
+
+  override fun onDestroy() {
+    Timber.i("PuppyCounter - ShareActivity - onDestroy()")
+    super.onDestroy()
   }
 
   private fun findViews() {
@@ -84,7 +112,7 @@ class ShareActivity : AppCompatActivity() {
     }
   }
 
-  private fun renderViewModelState() {
+  private fun renderDogCount(dogCount: DogCount) = with(dogCount) {
     smallDogStatsLabel.text = getString(R.string.small_dog_stats, smallDogCount.toString())
     middleDogStatsLabel.text = getString(R.string.middle_dog_stats, middleDogCount.toString())
     bigDogStatsLabel.text = getString(R.string.big_dog_stats, bigDogCount.toString())

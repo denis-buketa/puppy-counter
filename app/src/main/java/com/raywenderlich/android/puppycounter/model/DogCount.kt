@@ -44,7 +44,25 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class DogCount(
-    val smallDogCount: Int,
-    val middleDogCount: Int,
-    val bigDogCount: Int
-) : Parcelable
+    val smallDogCount: Int = 0,
+    val middleDogCount: Int = 0,
+    val bigDogCount: Int = 0
+) : Parcelable {
+
+  fun decrementSmallDogCount(): DogCount = copy(smallDogCount = decrement(smallDogCount))
+
+  fun decrementMiddleDogCount(): DogCount = copy(middleDogCount = decrement(middleDogCount))
+
+  fun decrementBigDogCount(): DogCount = copy(bigDogCount = decrement(bigDogCount))
+
+  fun incrementSmallDogCount(): DogCount = copy(smallDogCount = smallDogCount.inc())
+
+  fun incrementMiddleDogCount(): DogCount = copy(middleDogCount = middleDogCount.inc())
+
+  fun incrementBigDogCount(): DogCount = copy(bigDogCount = bigDogCount.inc())
+
+  /**
+   * Make sure that you can't decrement if value is 0
+   */
+  private fun decrement(value: Int): Int = if (value > 0) value.dec() else 0
+}
