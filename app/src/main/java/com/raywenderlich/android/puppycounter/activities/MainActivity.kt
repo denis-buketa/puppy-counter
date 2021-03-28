@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
   override fun onResume() {
     Timber.i("PuppyCounter - MainActivity - onResume()")
     super.onResume()
-    renderDogCount()
+    renderDogCount(dogCount)
   }
 
   override fun onPause() {
@@ -97,30 +97,6 @@ class MainActivity : AppCompatActivity() {
   override fun onDestroy() {
     Timber.i("PuppyCounter - MainActivity - onDestroy()")
     super.onDestroy()
-  }
-
-  override fun onSaveInstanceState(outState: Bundle) {
-    Timber.i("PuppyCounter - MainActivity - onSaveInstanceState()")
-
-    // Save the dog count state
-    outState.run {
-      putParcelable(STATE_DOG_COUNT, dogCount)
-    }
-
-    // Always call the superclass so it can save the view hierarchy state
-    super.onSaveInstanceState(outState)
-  }
-
-  override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-    Timber.i("PuppyCounter - MainActivity - onRestoreInstanceState()")
-
-    // Always call the superclass so it can restore the view hierarchy
-    super.onRestoreInstanceState(savedInstanceState)
-
-    with(savedInstanceState) {
-      val savedDogCount: DogCount? = getParcelable(STATE_DOG_COUNT)
-      dogCount = savedDogCount ?: DogCount()
-    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -173,10 +149,10 @@ class MainActivity : AppCompatActivity() {
 
   private fun updateDogCount(newDogCount: DogCount) {
     dogCount = newDogCount
-    renderDogCount()
+    renderDogCount(dogCount)
   }
 
-  private fun renderDogCount() {
+  private fun renderDogCount(dogCount: DogCount) {
     smallDogCountLabel.text = dogCount.smallDogCount.toString()
     middleDogCountLabel.text = dogCount.middleDogCount.toString()
     bigDogCountLabel.text = dogCount.bigDogCount.toString()
@@ -197,16 +173,12 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun showShareScreen() {
+    Timber.i("PuppyCounter - MainActivity - start ShareActivity Intent")
     val intent = ShareActivity.createIntent(this)
-
-    Timber.i("PuppyCounter - MainActivity - add DogCount to ShareActivity Intent")
-    intent.putExtra(ShareActivity.EXTRA_DOG_COUNT, dogCount)
-
     startActivity(intent)
   }
 
   private fun clearAll() {
-    dogCount = DogCount()
-    renderDogCount()
+    updateDogCount(DogCount())
   }
 }
