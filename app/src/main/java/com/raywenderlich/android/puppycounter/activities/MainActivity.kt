@@ -72,6 +72,11 @@ class MainActivity : AppCompatActivity() {
     setupBigDogViewsClickListeners()
   }
 
+  override fun onResume() {
+    super.onResume()
+    renderDogCount(dogCount)
+  }
+
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     val inflater: MenuInflater = menuInflater
     inflater.inflate(R.menu.menu_activity_main, menu)
