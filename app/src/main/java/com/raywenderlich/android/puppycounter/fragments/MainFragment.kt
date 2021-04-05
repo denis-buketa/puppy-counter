@@ -73,12 +73,6 @@ class MainFragment : Fragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     Timber.i("PuppyCounter - MainFragment - onCreate()")
     super.onCreate(savedInstanceState)
-
-    savedInstanceState?.run {
-      Timber.i("PuppyCounter - MainFragment - restoreState()")
-      val savedDogCount: DogCount? = getParcelable(STATE_DOG_COUNT)
-      dogCount = savedDogCount ?: DogCount()
-    }
   }
 
   override fun onCreateView(
@@ -115,7 +109,6 @@ class MainFragment : Fragment() {
   override fun onResume() {
     Timber.i("PuppyCounter - MainFragment - onResume()")
     super.onResume()
-    renderDogCount(dogCount)
   }
 
   override fun onPause() {
@@ -136,18 +129,6 @@ class MainFragment : Fragment() {
   override fun onDestroy() {
     Timber.i("PuppyCounter - MainFragment - onDestroy()")
     super.onDestroy()
-  }
-
-  override fun onSaveInstanceState(outState: Bundle) {
-    Timber.i("PuppyCounter - MainFragment - onSaveInstanceState()")
-
-    // Save the dog count state
-    outState.run {
-      putParcelable(STATE_DOG_COUNT, dogCount)
-    }
-
-    // Always call the superclass so it can save the view hierarchy state
-    super.onSaveInstanceState(outState)
   }
 
   private fun findViews(view: View) {
