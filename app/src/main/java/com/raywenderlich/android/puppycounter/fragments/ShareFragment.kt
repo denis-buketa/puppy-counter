@@ -79,7 +79,6 @@ class ShareFragment : Fragment() {
     Timber.i("PuppyCounter - ShareFragment - onCreate()")
     super.onCreate(savedInstanceState)
     readArguments()
-    subscribeToViewModel()
   }
 
   override fun onCreateView(
@@ -94,6 +93,7 @@ class ShareFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     Timber.i("PuppyCounter - ShareFragment - onViewCreated()")
     super.onViewCreated(view, savedInstanceState)
+    subscribeToViewModel()
     findViews(view)
     setOnShareBtnClickListener(view)
     openDialogIfNeeded()
@@ -136,7 +136,7 @@ class ShareFragment : Fragment() {
   }
 
   private fun subscribeToViewModel() {
-    viewModel.dogCount.observe(this, { dogCount ->
+    viewModel.dogCount.observe(viewLifecycleOwner, { dogCount ->
       renderDogCount(dogCount)
     })
   }
