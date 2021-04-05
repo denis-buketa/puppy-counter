@@ -76,7 +76,16 @@ class ShareActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.layout_share)
     findViews()
+
+    // Read extra data from the Intent
+    readExtras()
+
     setOnShareBtnClickListener()
+  }
+
+  private fun readExtras() = intent.extras?.run {
+    Timber.i("PuppyCounter - ShareActivity - readExtras()")
+    dogCount = getParcelable(EXTRA_DOG_COUNT) ?: DogCount()
   }
 
   override fun onResume() {
